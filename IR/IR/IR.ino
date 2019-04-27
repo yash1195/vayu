@@ -1,21 +1,3 @@
-//#define IRpin_PIN      PIND
-//#define IRpin          2
-//
-//// the maximum pulse we'll listen for - 65 milliseconds is a long time
-//#define MAXPULSE 65000
-//#define NUMPULSES 50
-//
-//// what our timing resolution should be, larger is better
-//// as its more 'precise' - but too large and you wont get
-//// accurate timing
-//#define RESOLUTION 20 
-//
-//// What percent we will allow in variation to match the same code
-//#define FUZZINESS 20
-//
-//// we will store up to 100 pulse pairs (this is -a lot-)
-//uint16_t pulses[NUMPULSES][2];  // pair is high and low pulse 
-//uint8_t currentpulse = 0; // index for pulses we're storing
 
 int fanSignal[] = {
   130, 44,
@@ -122,14 +104,6 @@ int rokuPower[] = {
   64, 50,
   64, 0};
 
-//int latchPin = 5;
-//int clockPin = 6;
-//int dataPin = 4;
-
-//byte leds = 0;
-//int counter = -1;
-//int LED_COUNT = 7;
-
 int signalLen = 0;
 int IRledPin = 13;
 
@@ -169,175 +143,8 @@ void loop(void) {
     // turn LED off:
     digitalWrite(ledPin, LOW);
   }
-//  int numberpulses;
-//  
-//  numberpulses = listenForIR();
-//  
-//  Serial.print("Heard ");
-//  Serial.print(numberpulses);
-//  Serial.println("-pulse long IR signal");
-//  
-//  if (IRcompare(numberpulses, fanSignal,sizeof(fanSignal)/4)) {
-//    Serial.println("FAN BTN");
-////    btnPress();
-//  } else if (IRcompare(numberpulses, rokuPower,sizeof(rokuPower)/4)) {
-//    Serial.println("ROKU POWER");
-////    btnPress();
-//  } else {
-//    Serial.println("Some other Btn");
-//  }
-////  printpulses();
-// 
-//  delay(1000);
-
-  
+ 
 }
-
-//void btnPress() {
-//
-//  counter++;
-//  if (counter == 7) {
-//    counter = 0;
-//    leds = 0;
-//  }
-//  
-//  
-//  bitSet(leds, counter);
-//  updateShiftRegister();
-//  delay(500);
-//}
-//
-//void updateShiftRegister()
-//{
-//   digitalWrite(latchPin, LOW);
-//   shiftOut(dataPin, clockPin, LSBFIRST, leds);
-//   digitalWrite(latchPin, HIGH);
-//}
-//
-////KGO: added size of compare sample. Only compare the minimum of the two
-//boolean IRcompare(int numpulses, int Signal[], int refsize) {
-//  int count = min(numpulses,refsize);
-//  Serial.print("count set to: ");
-//  Serial.println(count);
-//  for (int i=0; i< count-1; i++) {
-//    int oncode = pulses[i][1] * RESOLUTION / 10;
-//    int offcode = pulses[i+1][0] * RESOLUTION / 10;
-//    
-//#ifdef DEBUG    
-//    Serial.print(oncode); // the ON signal we heard
-//    Serial.print(" - ");
-//    Serial.print(Signal[i*2 + 0]); // the ON signal we want 
-//#endif   
-//    
-//    // check to make sure the error is less than FUZZINESS percent
-//    if ( abs(oncode - Signal[i*2 + 0]) <= (Signal[i*2 + 0] * FUZZINESS / 100)) {
-//#ifdef DEBUG
-//      Serial.print(" (ok)");
-//#endif
-//    } else {
-//#ifdef DEBUG
-//      Serial.print(" (x)");
-//#endif
-//      // we didn't match perfectly, return a false match
-//      return false;
-//    }
-//    
-//    
-//#ifdef DEBUG
-//    Serial.print("  \t"); // tab
-//    Serial.print(offcode); // the OFF signal we heard
-//    Serial.print(" - ");
-//    Serial.print(Signal[i*2 + 1]); // the OFF signal we want 
-//#endif    
-//    
-//    if ( abs(offcode - Signal[i*2 + 1]) <= (Signal[i*2 + 1] * FUZZINESS / 100)) {
-//#ifdef DEBUG
-//      Serial.print(" (ok)");
-//#endif
-//    } else {
-//#ifdef DEBUG
-//      Serial.print(" (x)");
-//#endif
-//      // we didn't match perfectly, return a false match
-//      return false;
-//    }
-//    
-//#ifdef DEBUG
-//    Serial.println();
-//#endif
-//  }
-//  // Everything matched!
-//  return true;
-//}
-//
-//int listenForIR(void) {
-//  currentpulse = 0;
-//  
-//  while (1) {
-//    uint16_t highpulse, lowpulse;  // temporary storage timing
-//    highpulse = lowpulse = 0; // start out with no pulse length
-//  
-////  while (digitalRead(IRpin)) { // this is too slow!
-//    while (IRpin_PIN & (1 << IRpin)) {
-//       // pin is still HIGH
-//
-//       // count off another few microseconds
-//       highpulse++;
-//       delayMicroseconds(RESOLUTION);
-//
-//       // If the pulse is too long, we 'timed out' - either nothing
-//       // was received or the code is finished, so print what
-//       // we've grabbed so far, and then reset
-//       
-//       // KGO: Added check for end of receive buffer
-//       if (((highpulse >= MAXPULSE) && (currentpulse != 0))|| currentpulse == NUMPULSES) {
-//         return currentpulse;
-//       }
-//    }
-//    // we didn't time out so lets stash the reading
-//    pulses[currentpulse][0] = highpulse;
-//  
-//    // same as above
-//    while (! (IRpin_PIN & _BV(IRpin))) {
-//       // pin is still LOW
-//       lowpulse++;
-//       delayMicroseconds(RESOLUTION);
-//        // KGO: Added check for end of receive buffer
-//        if (((lowpulse >= MAXPULSE)  && (currentpulse != 0))|| currentpulse == NUMPULSES) {
-//         return currentpulse;
-//       }
-//    }
-//    pulses[currentpulse][1] = lowpulse;
-//
-//    // we read one high-low pulse successfully, continue!
-//    currentpulse++;
-//  }
-//}
-//
-//    void printpulses(void) {
-//      Serial.println("\n\r\n\rReceived: \n\rOFF \tON");
-//      for (uint8_t i = 0; i < currentpulse; i++) {
-//        Serial.print(pulses[i][0] * RESOLUTION, DEC);
-//        Serial.print(" usec, ");
-//        Serial.print(pulses[i][1] * RESOLUTION, DEC);
-//        Serial.println(" usec");
-//      }
-//     
-//      // print it in a 'array' format
-//      Serial.println("int IRsignal[] = {");
-//      Serial.println("// ON, OFF (in 10's of microseconds)");
-//      for (uint8_t i = 0; i < currentpulse-1; i++) {
-//        Serial.print("\t"); // tab
-//        Serial.print(pulses[i][1] * RESOLUTION / 10, DEC);
-//        Serial.print(", ");
-//        Serial.print(pulses[i+1][0] * RESOLUTION / 10, DEC);
-//        Serial.println(",");
-//      }
-//      Serial.print("\t"); // tab
-//      Serial.print(pulses[currentpulse-1][1] * RESOLUTION / 10, DEC);
-//      Serial.print(", 0};");
-//    }
-
 
 // This procedure sends a 38KHz pulse to the IRledPin 
 // for a certain # of microseconds. We'll use this whenever we need to send codes
@@ -386,25 +193,4 @@ void sendCode(int signal[], int len) {
     
   }
   
-  // This is the code for my particular Nikon, for others use the tutorial
-  // to 'grab' the proper code from the remote
- 
-//  pulseIR(2080);
-//  delay(27);
-//  pulseIR(440);
-//  delayMicroseconds(1500);
-//  pulseIR(460);
-//  delayMicroseconds(3440);
-//  pulseIR(480);
-// 
-// 
-//  delay(65); // wait 65 milliseconds before sending it again
-// 
-//  pulseIR(2000);
-//  delay(27);
-//  pulseIR(440);
-//  delayMicroseconds(1500);
-//  pulseIR(460);
-//  delayMicroseconds(3440);
-//  pulseIR(480);
 }
