@@ -6,17 +6,10 @@
 
 /************************* WiFI Setup *****************************/
 
-// Mobile hotspot
-char ssid[] = "zekoFi";     //  your network SSID (name)
-char pass[] = "hellozeko";    // your network password (use for WPA, or use as key for WEP)
 
 // Home Wifi
-//char ssid[] = "Ghar Wifi";     //  your network SSID (name)
-//char pass[] = "silentearth285";    // your network password (use for WPA, or use as key for WEP)
-
-// Demo Wifi
-//char ssid[] = "sealab";     //  your network SSID (name)
-//char pass[] = "Gh0meDemo";    // your network password (use for WPA, or use as key for WEP)
+//char ssid[] = "###";     //  your network SSID (name)
+//char pass[] = "####";    // your network password (use for WPA, or use as key for WEP)
 
 
 int status = WL_IDLE_STATUS;
@@ -28,7 +21,7 @@ int status = WL_IDLE_STATUS;
 #define AIO_SERVERPORT  1883
 
 #define AIO_USERNAME  "yashchoukse"
-#define AIO_KEY       "308a5f7982d54f0ead4e0269fb17e2bb"
+#define AIO_KEY       "####"
 
 
 //Set up the wifi client
